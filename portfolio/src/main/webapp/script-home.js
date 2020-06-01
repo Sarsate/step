@@ -59,9 +59,9 @@ function main() {
     });
 }
 
-/** 
- * Creates an <li> element containing text.
- * @return {element} 
+/*
+ * @return the <li> element containing text passed in.
+ * @param {string} text is what is put into the <li>
  */
 function createListElement(text) {
   const liElement = document.createElement('li');
