@@ -166,6 +166,18 @@
     </div>
   </div>
   <div class="card-view">
+    <form action="/data" method="POST">
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname"><br>
+
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname"><br><br>
+
+      <label for="comment">Comment:</label><br>
+      <input type="text" id="comment" name="comment"><br><br>
+
+      <input type="submit" value="Post">
+    </form>
     <ul id="comments-container"></ul>
   </div>
   <script src="slideshow.js"></script>
