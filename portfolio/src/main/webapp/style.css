@@ -46,6 +46,11 @@ button {
   padding: 20px;
 }
 
+#comment {
+  height: auto;
+  max-width: 50%;
+}
+
 .footer {
   background: #ddd;
   height: 100%;
