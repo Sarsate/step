@@ -49,8 +49,26 @@ function main() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
 
-    fetch('/data').then((response) => response.text()).then((introHeading) => {
-        document.getElementById('intro-heading').innerText = introHeading;
-        document.getElementById('heading-button').style.display = 'none';
+    // fetch('/data').then((response) => response.text()).then((introHeading) => {
+    //     document.getElementById('intro-heading').innerText = introHeading;
+    //     document.getElementById('heading-button').style.display = 'none';
+    // });
+    fetch('/data').then(response => response.json()).then((comments) => {
+      const /** ?HTMLCollection */commentContainer =
+          document.getElementById('comments-container');
+      commentContainer.innerHTML = '';
+      for(i in comments){
+          commentContainer.appendChild(createListElement(comments[i]));
+      }
     });
+}
+
+/** 
+ * Creates an <li> element containing text.
+ * @return {element} 
+ */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
