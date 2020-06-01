@@ -52,9 +52,32 @@ function main() {
     fetch('/data').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
           document.getElementById('comments-container');
-      commentContainer.innerHTML = '';
+
       for(i in comments){
-          commentContainer.appendChild(createListElement(comments[i]));
+        let /** string */ stringOfName;
+        if(comments[i].name==null || comments[i].name==''){
+            stringOfName = 'Anonymous';
+        }else{
+            stringOfName = comments[i];
+        }
+
+        const /** ?HTMLCollection */ nameOfCommenter = document.createElement("h3");
+        nameOfCommenter.appendChild(document.createTextNode(stringOfName));
+        const /** ?HTMLCollection */ dateOfComment = document.createElement("h4");
+        dateOfComment.appendChild(document.createTextNode(comments[i].timeOfComment.toString()));
+        const /** ?HTMLCollection */ actualComment = document.createElement("p");
+        actualComment.appendChild(document.createTextNode(comments[i].comment));
+
+        actualComment.style.cssText='padding-top:10px;';
+        
+        const /** ?HTMLCollection */ divOfComment = document.createElement("div");
+        divOfComment.appendChild(nameOfCommenter);
+        divOfComment.appendChild(dateOfComment);
+        divOfComment.appendChild(actualComment);
+
+        divOfComment.style.cssText='border: 3px solid #b31b1b;padding:10px 0 10px;'
+
+        commentContainer.appendChild(divOfComment);
       }
     });
 }
