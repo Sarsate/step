@@ -51,6 +51,10 @@ button {
   width: 100%;
 }
 
+#comment-header {
+  padding: 10px 0 10px;
+}
+
 .footer {
   background: #ddd;
   height: 100%;
