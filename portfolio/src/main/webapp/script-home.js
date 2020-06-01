@@ -48,11 +48,7 @@ function main() {
         function adjustForwardOne() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
-
-    // fetch('/data').then((response) => response.text()).then((introHeading) => {
-    //     document.getElementById('intro-heading').innerText = introHeading;
-    //     document.getElementById('heading-button').style.display = 'none';
-    // });
+    
     fetch('/data').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
           document.getElementById('comments-container');
