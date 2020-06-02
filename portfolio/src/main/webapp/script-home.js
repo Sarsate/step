@@ -24,6 +24,8 @@ const ADJUST_FORWARD = 1;
  */
 const ADJUST_BACK = -1;
 
+let maxNumberDropdown;
+
 /** 
  * This waits until the webpage loads and then it calls the anonymous function, which calls main.
  */
@@ -35,6 +37,7 @@ window.onload = function() { main(); }
  */
 function main() {
   initializeSlideshows();
+  updateMaxDisplayComments();
   populateComments();
 }
 
@@ -61,16 +64,17 @@ function initializeSlideshows(){
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch('/data').then(response => response.json()).then((comments) => {
+  fetch('/data?max-numbers='+maxNumberDropdown).then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
             document.getElementById('comments-container');
+      commentContainer.innerHTML = "";
 
       for(i in comments) {
         let /** string */ stringOfName;
-        if (comments[i].getName()==null || comments[i].getName()=='') {
+        if (comments[i].name==null || comments[i].name=='') {
           stringOfName = 'Anonymous';
         } else {
-          stringOfName = comments[i].getName();
+          stringOfName = comments[i].name;
         }
 
         //Creates two headers and paragraph for the name, date, and comment.
@@ -78,9 +82,9 @@ function populateComments() {
         nameOfCommenter.innerHTML = stringOfName;
         const /** ?HTMLCollection */ dateOfComment = document.createElement("h4");
         dateOfComment.innerHTML =
-            "Date Posted: " + comments[i].getTimeOfComment();
+            "Date Posted: " + comments[i].timeOfComment;
         const /** ?HTMLCollection */ actualComment = document.createElement("p");
-        actualComment.innerHTML = comments[i].getComment();
+        actualComment.innerHTML = comments[i].comment;
 
         
         //Adds the individual elements to a single div
@@ -97,4 +101,9 @@ function populateComments() {
         commentContainer.appendChild(divOfComment);
       }
     });
+}
+function updateMaxDisplayComments(){
+    maxNumberDropdown = document.getElementById("max-numbers").value;
+    console.log(maxNumberDropdown);
+    populateComments();
 }

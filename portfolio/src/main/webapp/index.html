@@ -166,10 +166,11 @@
   </div>
   <div class="card-view">
       <label for="select">Select maximum number of comments to display:</label>
-      <select name="max-numbers" onchange="populateComments()">
+      <select id="max-numbers" name="max-numbers" onchange="updateMaxDisplayComments()">
+          <option value ="1" selected>1</option>
         <option value="5">5</option>
         <option value="10">10</option>
-        <option value="15" selected>15</option>
+        <option value="15">15</option>
         <option value="20">20</option>
         <option value="25">25</option>
       </select><br><br>
