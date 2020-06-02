@@ -13,65 +13,74 @@
 // limitations under the License.
 
 /**
- * Adjusts the SlideShow forward by one.
+ * Adjusts the Slideshow forward by one.
  * @type {number}
  */
 const ADJUST_FORWARD = 1;
 
 /**
- * Adjusts the SlideShow back one.
+ * Adjusts the Slideshow back one.
  * @type {number}
  */
 const ADJUST_BACK = -1;
 
-/*
+/** 
  * This waits until the webpage loads and then it calls the anonymous function, which calls main.
  */
 window.onload = function() { main(); }
 
-/* 
- * function main() initializes the slideshows and the interactive elements on the website.
+/**
+ * function main() initializes the slideshows, maintains the interactive elements on the website,
+ * and populates the comment board from a servlet. 
  */
 function main() {
-    const /** ?HTMLCollection */ slideShowGallery =
-        new SlideShow(document.getElementsByClassName('gallery-slides'));
-    const /** ?HTMLCollection */ slideShowBlog  =
-        new SlideShow(document.getElementsByClassName('blog-slides'));
+  initializeSlideshows();
+  populateComments();
+}
 
-    slideShowBlog.setToAutomaticallyChangeSlides();
+/** 
+ * function initializeSlideshows() initializes the blog slideshow and the gallery slideshow.
+ */
+function initializeSlideshows(){
+  const /** ?HTMLCollection */ slideshowGallery =
+      new Slideshow(document.getElementsByClassName('gallery-slides'));
+  const /** ?HTMLCollection */ slideshowBlog  =
+      new Slideshow(document.getElementsByClassName('blog-slides'));
+  slideshowBlog.setToAutomaticallyChangeSlides();
 
-    document.getElementById('switch-slides-left').onclick =
+  document.getElementById('switch-slides-left').onclick =
         function adjustBackOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
+          slideshowGallery.adjustSlideManual(ADJUST_BACK); 
     }
-    document.getElementById('switch-slides-right').onclick =
+  document.getElementById('switch-slides-right').onclick =
         function adjustForwardOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
-    }
-    
-    fetch('/data').then(response => response.json()).then((comments) => {
+          slideshowGallery.adjustSlideManual(ADJUST_FORWARD); 
+    }  
+}
+/** 
+ * function populateComments() populates the comment board on the webpage.
+ */
+function populateComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
-          document.getElementById('comments-container');
+            document.getElementById('comments-container');
 
-      for(i in comments){
+      for(i in comments) {
         let /** string */ stringOfName;
-        if(comments[i].name==null || comments[i].name==''){
-            stringOfName = 'Anonymous';
-        }else{
-            stringOfName = comments[i].name;
+        if (comments[i].getName()==null || comments[i].getName()=='') {
+          stringOfName = 'Anonymous';
+        } else {
+          stringOfName = comments[i].getName();
         }
-
-        console.log(comments[i].comment);
-        console.log(comments[i].timeOfComment);
 
         //Creates two headers and paragraph for the name, date, and comment.
         const /** ?HTMLCollection */ nameOfCommenter = document.createElement("h3");
         nameOfCommenter.innerHTML = stringOfName;
         const /** ?HTMLCollection */ dateOfComment = document.createElement("h4");
         dateOfComment.innerHTML =
-            "Date Posted: " + comments[i].timeOfComment;
+            "Date Posted: " + comments[i].getTimeOfComment();
         const /** ?HTMLCollection */ actualComment = document.createElement("p");
-        actualComment.innerHTML = comments[i].comment
+        actualComment.innerHTML = comments[i].getComment();
 
         
         //Adds the individual elements to a single div
