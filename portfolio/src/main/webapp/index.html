@@ -165,9 +165,17 @@
     </div>
   </div>
   <div class="card-view">
+      <label for="select">Select maximum number of comments to display:</label>
+      <select name="max-numbers" onchange="populateComments()">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15" selected>15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select><br><br>
     <form action="/data" method="POST">
       <label for="name">Name:</label><br>
-      <input type="text" id="name" name="name"><br><br>
+      <input type="text" id="name" name="name"><br>
 
       <label for="comment">Comment:</label><br>
       <input type="text" id="comment" name="comment"><br><br>

@@ -21,6 +21,7 @@ import java.util.Date;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -41,12 +42,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    //int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
     Query query = new Query("Comment").addSort("timeOfComment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
+    
 
     List<Comment> tempListOfComments = new ArrayList<>();
     //Creates a Comment object for each entity that was previously ever posted. 
-    for (Entity commentEntity : results.asIterable()) {
+    for (Entity commentEntity : results.asIterable(FetchOptions.Builder.withLimit(1))) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment");
