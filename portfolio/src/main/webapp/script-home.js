@@ -61,6 +61,9 @@ function main() {
             stringOfName = comments[i].name;
         }
 
+        console.log(comments[i].comment);
+        console.log(comments[i].timeOfComment);
+
         //Creates two headers and paragraph for the name, date, and comment.
         const /** ?HTMLCollection */ nameOfCommenter = document.createElement("h3");
         nameOfCommenter.innerHTML = stringOfName;
@@ -85,14 +88,4 @@ function main() {
         commentContainer.appendChild(divOfComment);
       }
     });
-}
-
-/*
- * @return the <li> element containing text passed in.
- * @param {string} text is what is put into the <li>
- */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
 }
