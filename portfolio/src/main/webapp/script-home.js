@@ -58,24 +58,29 @@ function main() {
         if(comments[i].name==null || comments[i].name==''){
             stringOfName = 'Anonymous';
         }else{
-            stringOfName = comments[i];
+            stringOfName = comments[i].name;
         }
 
+        //Creates two headers and paragraph for the name, date, and comment.
         const /** ?HTMLCollection */ nameOfCommenter = document.createElement("h3");
-        nameOfCommenter.appendChild(document.createTextNode(stringOfName));
+        nameOfCommenter.innerHTML = stringOfName;
         const /** ?HTMLCollection */ dateOfComment = document.createElement("h4");
-        dateOfComment.appendChild(document.createTextNode(comments[i].timeOfComment.toString()));
+        dateOfComment.innerHTML =
+            "Date Posted: " + comments[i].timeOfComment;
         const /** ?HTMLCollection */ actualComment = document.createElement("p");
-        actualComment.appendChild(document.createTextNode(comments[i].comment));
+        actualComment.innerHTML = comments[i].comment
 
-        actualComment.style.cssText='padding-top:10px;';
         
+        //Adds the individual elements to a single div
         const /** ?HTMLCollection */ divOfComment = document.createElement("div");
         divOfComment.appendChild(nameOfCommenter);
         divOfComment.appendChild(dateOfComment);
         divOfComment.appendChild(actualComment);
 
-        divOfComment.style.cssText='border: 3px solid #b31b1b;padding:10px 0 10px;'
+        //Styles the div
+        divOfComment.style.border="3px solid #b31b1b";
+        divOfComment.style.margin="15px 0 15px";
+        divOfComment.style.padding="10px";
 
         commentContainer.appendChild(divOfComment);
       }
