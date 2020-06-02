@@ -1,5 +1,5 @@
 /**
- * Types of SlideShow modes.
+ * Types of Slideshow modes.
  * @enum {string}
  */
 const Mode = {
@@ -9,12 +9,12 @@ const Mode = {
   AUTOMATIC: 'automatic',
 };
 
-/** The SlideShow class maintains the slideshows on the website. By 
+/** The Slideshow class maintains the slideshows on the website. By 
   * default, the SlideShow must be manually adjusted.
   */
-class SlideShow {
+class Slideshow {
   /**
-   * Operates on an instance of SlideShow.
+   * Operates on an instance of Slideshow.
    * @param {?HTMLCollection} collectionOfSlides Holds a collection of slides
    *     from the webpage, defined by a class tag.
    */
@@ -31,7 +31,7 @@ class SlideShow {
     /** @private @const {number} represents one increment of a slide. */
     this.SINGLE_INCREMENT_ = 1;
 
-    /** @private {string} represents the current mode of SlideShow. */
+    /** @private {string} represents the current mode of Slideshow. */
     this.mode_ = Mode.MANUAL;
 
     this.displayInitialSlide_();
@@ -52,11 +52,11 @@ class SlideShow {
 
   /**
    * Changes the slide displayed on the website to be adjustIndex
-   * ahead/behind current slide. Only works for SlideShows that 
+   * ahead/behind current slide. Only works for Slideshows that 
    * can only be adjusted manually. The slide previously
    * displayed has it's display changed to none, hiding it,
    * and the slide to be shown as it's display changed to 'block'
-   * @param {number} adjustIndex How much the SlideShow should be
+   * @param {number} adjustIndex How much the Slideshow should be
    *     adjusted.
    */
   adjustSlideManual(adjustIndex) {
@@ -94,16 +94,16 @@ class SlideShow {
   }
 
   /**
-   * This method changes the mode of the SlideShow.
+   * This method changes the mode of the Slideshow.
    * @param {string} mode which mode to change to.
    * @private
    */
   setMode_(mode) {
     const /** string */ old_mode = this.mode_;
     this.mode_ = mode;
-    // This if condition prevents showSlidesAuto from being called
+    // This if condition prevents adjustSlidesAuto from being called
     // multiple times. If a slideshow is set to automatic when it
-    // previously already was, showSlidesAuto isn't recalled.
+    // previously already was, adjustSlidesAuto isn't recalled.
     if (this.mode_ != old_mode && this.mode_ == Mode.AUTOMATIC) {
       this.adjustSlidesAuto_(this.TIME_BEFORE_SWITCH_);
     }
