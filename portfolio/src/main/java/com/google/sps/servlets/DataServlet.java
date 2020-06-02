@@ -42,14 +42,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    //int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
+    int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
     Query query = new Query("Comment").addSort("timeOfComment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
     
 
     List<Comment> tempListOfComments = new ArrayList<>();
     //Creates a Comment object for each entity that was previously ever posted. 
-    for (Entity commentEntity : results.asIterable(FetchOptions.Builder.withLimit(1))) {
+    for (Entity commentEntity : results.asIterable(FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment");
