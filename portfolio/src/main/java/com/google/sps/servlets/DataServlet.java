@@ -14,12 +14,15 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.Comment;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.util.Date;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private List<Comment> listOfComments = new ArrayList<Comment>();
-  //private List<Comment> commentMessages = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,6 +49,15 @@ public class DataServlet extends HttpServlet {
     String commentString = request.getParameter("comment");
     Comment comment = new Comment(currentTime, name, commentString);
     listOfComments.add(comment);
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("timeOfComment", currentTime);
+    commentEntity.setProperty("coment", commentString);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
     response.sendRedirect("/index.html");
   }
 }
