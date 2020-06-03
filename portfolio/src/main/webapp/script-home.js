@@ -102,8 +102,21 @@ function populateComments() {
       }
     });
 }
+
+/**
+ * Limits the number of comments displayed based on the max-number
+ * dropdown.
+ */
 function updateMaxDisplayComments(){
     maxNumberDropdown = document.getElementById("max-numbers").value;
-    console.log(maxNumberDropdown);
     populateComments();
+}
+
+/**
+ * Deletes all the comments from the servlet.
+ */
+function deleteComments(){
+  var deleteInit = { method: 'POST' };
+  var deleteRequest = new Request('/delete-data', deleteInit);
+  fetch(deleteRequest).then(populateComments());
 }

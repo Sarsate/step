@@ -32,12 +32,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<Comment> listOfComments = new ArrayList<Comment>();
-  private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  private List<Comment> listOfComments = 
+      new ArrayList<Comment>();
+  private DatastoreService datastore = 
+      DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -49,7 +51,8 @@ public class DataServlet extends HttpServlet {
 
     List<Comment> tempListOfComments = new ArrayList<>();
     //Creates a Comment object for each entity that was previously ever posted. 
-    for (Entity commentEntity : results.asIterable(FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
+    for (Entity commentEntity : results.asIterable(
+        FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment");
@@ -69,7 +72,6 @@ public class DataServlet extends HttpServlet {
     Date currentTime = new Date();
     String name = request.getParameter("name");
     String commentString = request.getParameter("comment");
-    System.out.println(commentString + "hello");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);

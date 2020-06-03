@@ -76,7 +76,7 @@ all existing comments.
 
 Add a new `DataServlet` for the url `/delete-data`. Implement the
 `doPost()` method to delete the contents of your datastore (check out the
-[documentation](https://cloud.google.com/appengine/docs/standard/java/datastore/creating-entities#Deleting_entities)
+[documentation](https://cloud.google.com/appengine/dsocs/standard/java/datastore/creating-entities#Deleting_entities)
 to help you get started). Your servlet can just return an empty response
 when it is done.
 

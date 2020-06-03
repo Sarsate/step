@@ -55,6 +55,10 @@ button {
   padding: 10px 0 10px;
 }
 
+.delete-comments {
+  float: right;
+}
+
 .footer {
   background: #ddd;
   height: 100%;
