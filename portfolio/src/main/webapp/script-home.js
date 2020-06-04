@@ -44,7 +44,7 @@ function main() {
 /** 
  * function initializeSlideshows() initializes the blog slideshow and the gallery slideshow.
  */
-function initializeSlideshows(){
+function initializeSlideshows() {
   const /** ?HTMLCollection */ slideshowGallery =
       new Slideshow(document.getElementsByClassName('gallery-slides'));
   const /** ?HTMLCollection */ slideshowBlog  =
@@ -107,7 +107,7 @@ function populateComments() {
  * Limits the number of comments displayed based on the max-number
  * dropdown.
  */
-function updateMaxDisplayComments(){
+function updateMaxDisplayComments() {
     maxNumberDropdown = document.getElementById("max-numbers").value;
     populateComments();
 }
@@ -115,7 +115,7 @@ function updateMaxDisplayComments(){
 /**
  * Deletes all the comments from the servlet.
  */
-function deleteComments(){
+function deleteComments() {
   var deleteInit = { method: 'POST' };
   var deleteRequest = new Request('/delete-data', deleteInit);
   fetch(deleteRequest).then(populateComments());
