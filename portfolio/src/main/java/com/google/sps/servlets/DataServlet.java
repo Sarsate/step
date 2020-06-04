@@ -37,9 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   private List<Comment> listOfComments = 
-      new ArrayList<Comment>();
+        new ArrayList<Comment>();
   private DatastoreService datastore = 
-      DatastoreServiceFactory.getDatastoreService();
+        DatastoreServiceFactory.getDatastoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -72,7 +72,6 @@ public class DataServlet extends HttpServlet {
     Date currentTime = new Date();
     String name = request.getParameter("name");
     String commentString = request.getParameter("comment");
-
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("timeOfComment", currentTime);

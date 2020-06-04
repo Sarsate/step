@@ -119,4 +119,5 @@ function deleteComments() {
   var deleteInit = { method: 'POST' };
   var deleteRequest = new Request('/delete-data', deleteInit);
   fetch(deleteRequest).then(populateComments());
+
 }
