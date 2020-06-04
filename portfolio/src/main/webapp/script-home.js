@@ -48,7 +48,8 @@ function main() {
         function adjustForwardOne() {
           slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
     }
-    
+    // Fetches the pre-made comment list from the servlet and makes 
+    // a list for each comment.
     fetch('/data').then(response => response.json()).then((comments) => {
       const /** ?HTMLCollection */commentContainer =
           document.getElementById('comments-container');
