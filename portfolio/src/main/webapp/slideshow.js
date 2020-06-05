@@ -102,9 +102,9 @@ class SlideShow {
   setMode_(mode) {
     const /** string */ old_mode = this.mode_;
     this.mode_ = mode;
-    // This if condition prevents showSlidesAuto from being called
+    // This if condition prevents adjustSlidesAuto from being called
     // multiple times. If a slideshow is set to automatic when it
-    // previously already was, showSlidesAuto isn't recalled.
+    // previously already was, adjustSlidesAuto isn't recalled.
     if (this.mode_ != old_mode && this.mode_ == Mode.AUTOMATIC) {
       this.adjustSlidesAuto_(this.TIME_BEFORE_SWITCH_);
     }
