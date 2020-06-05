@@ -33,21 +33,6 @@ window.onload = function() { main(); }
  * function main() initializes the slideshows and the interactive elements on the website.
  */
 function main() {
-    const /** ?HTMLCollection */ slideShowGallery =
-        new SlideShow(document.getElementsByClassName('gallery-slides'));
-    const /** ?HTMLCollection */ slideShowBlog  =
-        new SlideShow(document.getElementsByClassName('blog-slides'));
-
-    slideShowBlog.setToAutomaticallyChangeSlides();
-
-    document.getElementById('switch-slides-left').onclick =
-        function adjustBackOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
-    }
-    document.getElementById('switch-slides-right').onclick =
-        function adjustForwardOne() {
-          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
-    }
     // Fetches the pre-made comment list from the servlet and makes 
     // a list for each comment.
     fetch('/comments').then(response => response.json()).then((comments) => {
@@ -59,12 +44,67 @@ function main() {
     });
 }
 
-/*
- * @return the <li> element containing text passed in.
- * @param {string} text is what is put into the <li>
+/** 
+ * function initializeSlideshows() initializes the blog slideshow and the gallery slideshow.
  */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function initializeSlideshows() {
+  const /** ?HTMLCollection */ slideshowGallery =
+      new SlideShow(document.getElementsByClassName('gallery-slides'));
+  const /** ?HTMLCollection */ slideshowBlog  =
+      new SlideShow(document.getElementsByClassName('blog-slides'));
+  slideshowBlog.setToAutomaticallyChangeSlides();
+
+  document.getElementById('switch-slides-left').onclick =
+        function adjustBackOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_BACK); 
+        };
+  document.getElementById('switch-slides-right').onclick =
+        function adjustForwardOne() {
+          slideShowGallery.adjustSlideManual(ADJUST_FORWARD); 
+        };
+}
+
+/** 
+ * function populateComments() populates the comment board on the webpage.
+ */
+function populateComments() {
+  fetch('/comments').then(response => response.json()).then(
+        (comments) => {
+          const /** ?HTMLCollection */commentContainer =
+              document.getElementById('comments-container');
+
+          comments.forEach(function(comment) {
+            let /** string */ stringOfName;
+            if (comment.name==null || comment.name=='') {
+              stringOfName = 'Anonymous';
+            } else {
+              stringOfName = comment.name;
+            }
+            //Creates two headers and paragraph for the name, date, and comment.
+            const /** ?HTMLCollection */ nameOfCommenter =
+                document.createElement('h3');
+            nameOfCommenter.innerHTML = stringOfName;
+            const /** ?HTMLCollection */ dateOfComment =
+                document.createElement('h4');
+            dateOfComment.innerHTML =
+                "Date Posted: " + comment.timeOfComment;
+            const /** ?HTMLCollection */ commentString =
+                document.createElement('p');
+            commentString.innerHTML = comment.commentString;
+
+            //Adds the individual elements to a single div
+            const /** ?HTMLCollection */ divOfComment =
+                document.createElement('div');
+            divOfComment.appendChild(nameOfCommenter);
+            divOfComment.appendChild(dateOfComment);
+            divOfComment.appendChild(commentString);
+
+            //Styles the div
+            divOfComment.style.border='3px solid #b31b1b';
+            divOfComment.style.margin='15px 0 15px';
+            divOfComment.style.padding='10px';
+
+            commentContainer.appendChild(divOfComment);
+          });
+        });
 }
