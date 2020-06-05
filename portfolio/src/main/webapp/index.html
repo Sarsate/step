@@ -168,7 +168,7 @@
       <label for="select-max-numbers">Select maximum number of
           comments to display:</label>
       <select id="max-numbers" name="max-numbers"
-          onchange="updateMaxDisplayComments()">
+          onchange="updateComments()">
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="15" selected>15</option>
@@ -178,7 +178,7 @@
       </select><br><br>
       <label for="sort-by-comments">Sort By:</label>
       <select id="sort-comments" name="sort-comments"
-          onchange="updateMaxDisplayComments()">
+          onchange="updateComments()">
         <option value='{"entityProperty":"timeOfComment",
           "sortDirection":"descending"}'
           selected>Newest first</option>
