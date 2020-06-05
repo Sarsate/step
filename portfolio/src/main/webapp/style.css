@@ -100,3 +100,12 @@ button {
 #switch-slides-right {
   float: right;
 }
+
+#comment {
+  height: 200px;
+  width: 100%;
+}
+
+#comment-header {
+  padding: 10px 0 10px;
+}
