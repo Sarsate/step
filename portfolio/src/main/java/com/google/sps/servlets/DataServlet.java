@@ -45,10 +45,10 @@ public class DataServlet extends HttpServlet {
     List<Comment> listOfComments = new ArrayList<Comment>();
     //Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable()) {
-      Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
+      Date timeOfComment = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment-string");
-      Comment comment = new Comment(currentTime, name, commentString);
+      Comment comment = new Comment(timeOfComment, name, commentString);
       listOfComments.add(comment);
     }
     //Changes the list of Comments into a JSON
@@ -61,13 +61,13 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Date currentTime = new Date();
+    Date timeOfComment = new Date();
     String name = request.getParameter("name");
     String commentString = request.getParameter("comment-string");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
-    commentEntity.setProperty("timeOfComment", currentTime);
+    commentEntity.setProperty("timeOfComment", timeOfComment);
     commentEntity.setProperty("comment-string", commentString);
 
     datastore.put(commentEntity);
