@@ -44,7 +44,7 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timeOfComment", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    List<Comment> tempListOfComments = new ArrayList<>();
+    List<Comment> listOfComments = new ArrayList<Comment>();
     //Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable()) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
