@@ -36,8 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private List<Comment> listOfComments = 
-        new ArrayList<Comment>();
   private DatastoreService datastore = 
         DatastoreServiceFactory.getDatastoreService();
 
@@ -53,7 +51,7 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     
 
-    List<Comment> tempListOfComments = new ArrayList<>();
+    List<Comment> listOfComments = new ArrayList<>();
     // Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable(
         FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
@@ -61,11 +59,10 @@ public class DataServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment");
       Comment comment = new Comment(currentTime, name, commentString);
-      tempListOfComments.add(comment);
+      listOfComments.add(comment);
     }
     // Changes the list of Comments into a JSON
     Gson gson = new Gson();
-    listOfComments = tempListOfComments;
     String json = gson.toJson(listOfComments);
     response.setContentType("application/json;");
     response.getWriter().println(json);
