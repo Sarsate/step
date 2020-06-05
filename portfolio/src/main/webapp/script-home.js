@@ -33,15 +33,8 @@ window.onload = function() { main(); }
  * function main() initializes the slideshows and the interactive elements on the website.
  */
 function main() {
-    // Fetches the pre-made comment list from the servlet and makes 
-    // a list for each comment.
-    fetch('/comments').then(response => response.json()).then((comments) => {
-      const /** ?HTMLCollection */commentContainer =
-            document.getElementById('comments-container');
-      comments.forEach(function(comment) {
-          commentContainer.appendChild(createListElement(comment));
-      });
-    });
+    initializeSlideshows();
+    populateComments();
 }
 
 /** 
@@ -78,7 +71,7 @@ function populateComments() {
             if (comment.name==null || comment.name=='') {
               stringOfName = 'Anonymous';
             } else {
-              stringOfName = comment.name;
+              stringOfName = comment.getName();
             }
             //Creates two headers and paragraph for the name, date, and comment.
             const /** ?HTMLCollection */ nameOfCommenter =
