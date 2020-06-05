@@ -49,11 +49,10 @@ public class DataServlet extends HttpServlet {
       String name = (String) commentEntity.getProperty("name");
       String commentString = (String) commentEntity.getProperty("comment");
       Comment comment = new Comment(currentTime, name, commentString);
-      tempListOfComments.add(comment);
+      listOfComments.add(comment);
     }
     //Changes the list of Comments into a JSON
     Gson gson = new Gson();
-    listOfComments = tempListOfComments;
     String json = gson.toJson(listOfComments);
     response.setContentType("application/json;");
     response.getWriter().println(json);
