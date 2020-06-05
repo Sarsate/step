@@ -71,7 +71,7 @@ function populateComments() {
             if (comment.name==null || comment.name=='') {
               stringOfName = 'Anonymous';
             } else {
-              stringOfName = comment.getName();
+              stringOfName = comment.name;
             }
             //Creates two headers and paragraph for the name, date, and comment.
             const /** ?HTMLCollection */ nameOfCommenter =
