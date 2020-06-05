@@ -165,9 +165,7 @@
     </div>
   </div>
   <div class="card-view">
-      <button id="delete-comments" onclick="deleteComments()">
-          Delete comments</button>
-      <label for="select">Select maximum number of
+      <label for="select-max-numbers">Select maximum number of
           comments to display:</label>
       <select id="max-numbers" name="max-numbers"
           onchange="updateMaxDisplayComments()">
@@ -178,13 +176,31 @@
         <option value="25">25</option>
         <option value="100">100</option>
       </select><br><br>
+      <label for="sort-by-comments">Sort By:</label>
+      <select id="sort-comments" name="sort-comments"
+          onchange="updateMaxDisplayComments()">
+        <option value='{"entityProperty":"timeOfComment",
+          "sortDirection":"descending"}'
+          selected>Newest first</option>
+        <option value='{"entityProperty":"timeOfComment",
+          "sortDirection":"ascending"}'>
+          Oldest first</option>
+        <option value='{"entityProperty":"lengthOfComment",
+          "sortDirection":"descending"}'>
+          Longest first</option>
+        <option value='{"entityProperty":"lengthOfComment",
+          "sortDirection":"ascending"}'>
+          Shortest first</option>
+      </select><br><br>
     <form action="/data" method="POST">
       <label for="name">Name:</label><br>
       <input type="text" id="name" name="name"><br>
       <label for="comment">Comment:</label><br>
       <input type="text" id="comment" name="comment"><br><br>
-      <input type="submit" value="Post">
+      <input type="submit" id="submit-button" value="Post">
     </form>
+    <button id="delete-comments" onclick="deleteComments()">
+      Delete comments</button>
     <h3 id="commentHeader">Comments:</h3>
     <div id="comments-container"></div>
   </div>

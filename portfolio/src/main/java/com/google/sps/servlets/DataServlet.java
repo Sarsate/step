@@ -44,8 +44,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    //Gets the various values from the query string
     int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
-    Query query = new Query("Comment").addSort("timeOfComment", SortDirection.DESCENDING);
+    Query sortDirection = request.getParameter("sort-direction") == "descending" 
+        ? SortDirection.DESCENDING : SortDirection.ASCENDING;
+    Query query = new Query("Comment").addSort(
+        request.getParameter("entity-property"), sortDirection);
     PreparedQuery results = datastore.prepare(query);
     
 
@@ -76,6 +80,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("timeOfComment", currentTime);
     commentEntity.setProperty("comment", commentString);
+    commentEntity.setProperty("lengthOfComment",commentString.length());
 
     datastore.put(commentEntity);
 

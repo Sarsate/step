@@ -24,7 +24,7 @@ const ADJUST_FORWARD = 1;
  */
 const ADJUST_BACK = -1;
 
-let maxNumberDropdown;
+let queryString;
 
 /** 
  * This waits until the webpage loads and then it calls the anonymous function, which calls main.
@@ -64,51 +64,67 @@ function initializeSlideshows() {
  * function populateComments() populates the comment board on the webpage.
  */
 function populateComments() {
-  fetch('/data?max-numbers='+maxNumberDropdown).then(response => response.json()).then((comments) => {
-      const /** ?HTMLCollection */commentContainer =
-            document.getElementById('comments-container');
-      commentContainer.innerHTML = "";
+  fetch(queryString).then(response => response.json()).then(
+        (comments) => {
+          const /** ?HTMLCollection */commentContainer =
+              document.getElementById('comments-container');
+          commentContainer.innerHTML = "";
 
-      for(i in comments) {
-        let /** string */ stringOfName;
-        if (comments[i].name==null || comments[i].name=='') {
-          stringOfName = 'Anonymous';
-        } else {
-          stringOfName = comments[i].name;
+          for(i in comments) {
+            let /** string */ stringOfName;
+            if (comments[i].name==null || comments[i].name=='') {
+              stringOfName = 'Anonymous';
+            } else {
+              stringOfName = comments[i].name;
+            }
+            //Creates two headers and paragraph for the name, date, and comment.
+            const /** ?HTMLCollection */ nameOfCommenter =
+                document.createElement('h3');
+            nameOfCommenter.innerHTML = stringOfName;
+            const /** ?HTMLCollection */ dateOfComment =
+                document.createElement('h4');
+            dateOfComment.innerHTML =
+                "Date Posted: " + comments[i].timeOfComment;
+            const /** ?HTMLCollection */ actualComment =
+                document.createElement('p');
+            actualComment.innerHTML = comments[i].comment;
+
+            //Adds the individual elements to a single div
+            const /** ?HTMLCollection */ divOfComment =
+                document.createElement('div');
+            divOfComment.appendChild(nameOfCommenter);
+            divOfComment.appendChild(dateOfComment);
+            divOfComment.appendChild(actualComment);
+
+            //Styles the div
+            divOfComment.style.border='3px solid #b31b1b';
+            divOfComment.style.margin='15px 0 15px';
+            divOfComment.style.padding='10px';
+
+            commentContainer.appendChild(divOfComment);
         }
-
-        //Creates two headers and paragraph for the name, date, and comment.
-        const /** ?HTMLCollection */ nameOfCommenter = document.createElement("h3");
-        nameOfCommenter.innerHTML = stringOfName;
-        const /** ?HTMLCollection */ dateOfComment = document.createElement("h4");
-        dateOfComment.innerHTML =
-            "Date Posted: " + comments[i].timeOfComment;
-        const /** ?HTMLCollection */ actualComment = document.createElement("p");
-        actualComment.innerHTML = comments[i].comment;
-
-        
-        //Adds the individual elements to a single div
-        const /** ?HTMLCollection */ divOfComment = document.createElement("div");
-        divOfComment.appendChild(nameOfCommenter);
-        divOfComment.appendChild(dateOfComment);
-        divOfComment.appendChild(actualComment);
-
-        //Styles the div
-        divOfComment.style.border="3px solid #b31b1b";
-        divOfComment.style.margin="15px 0 15px";
-        divOfComment.style.padding="10px";
-
-        commentContainer.appendChild(divOfComment);
-      }
     });
 }
-
 /**
- * Limits the number of comments displayed based on the max-number
- * dropdown.
+ * Updates the comments based on the maximum amount that
+ * should be displayed and also sorts the comments based on the value of the
+ * sort-comments select.
  */
-function updateMaxDisplayComments() {
-    maxNumberDropdown = document.getElementById("max-numbers").value;
+function updateComments() {
+    const maxNumberDropdown =
+        document.getElementById('max-numbers').value;
+    // Each select value is stored as a JSON, to allow for more than one value
+    // to be used, the code below just parses the sort-comments select value and gets
+    // the two values of the JSON
+    const entityProperty = 
+        JSON.parse(document.getElementById('sort-comments'
+            ).value)["entityProperty"];
+    const sortDirection = 
+        JSON.parse(document.getElementById('sort-comments'
+            ).value)["sortDirection"];
+    queryString = '/data?max-numbers='+maxNumberDropdown+'?sort-direction='+
+        sortDirection+'?entity-property='+entityProperty;
+    // Fetches comments again
     populateComments();
 }
 
@@ -116,8 +132,7 @@ function updateMaxDisplayComments() {
  * Deletes all the comments from the servlet.
  */
 function deleteComments() {
-  var deleteInit = { method: 'POST' };
-  var deleteRequest = new Request('/delete-data', deleteInit);
+  const deleteInit = { method: 'POST' };
+  const deleteRequest = new Request('/delete-data', deleteInit);
   fetch(deleteRequest).then(populateComments());
-
 }

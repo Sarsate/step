@@ -23,7 +23,8 @@ html {
   font-size: larger;
 }
 
-button {
+button,
+#submit-button {
   background: #b31b1b;
   color: #fff;
   margin-bottom: 10px;
@@ -53,10 +54,6 @@ button {
 
 #comment-header {
   padding: 10px 0 10px;
-}
-
-.delete-comments {
-  float: right;
 }
 
 .footer {
@@ -112,4 +109,9 @@ button {
 
 #switch-slides-right {
   float: right;
+}
+
+.delete-comments {
+  float: right;
+  position: relative;
 }

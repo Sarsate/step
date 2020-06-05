@@ -378,7 +378,7 @@ world, you can deploy it to a live server!
 To deploy to a live server:
 
 -   Navigate to
-    [https://console.cloud.google.com/home/dashboard](https://console.cloud.google.com/home/dashboard).
+    [https://console.cloud.google.com/home/](https://console.cloud.google.com/home/dashboard).
 -   Make sure your project is selected in the dropdown at the top.
 -   Find the **Project ID** on that page.
 -   Open the
