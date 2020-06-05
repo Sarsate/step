@@ -28,7 +28,7 @@ public class Comment {
   public String getName() {
     return name;
   }
-  
+
   public String getCommentString() {
     return commentString;
   }
