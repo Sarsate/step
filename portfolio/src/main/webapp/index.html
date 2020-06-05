@@ -165,7 +165,17 @@
     </div>
   </div>
   <div class="card-view">
-    <ul id="comments-container"></ul>
+    <form action="/data" method="POST">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name"><br><br>
+
+      <label for="comment">Comment:</label><br>
+      <input type="text" id="comment" name="comment"><br><br>
+
+      <input type="submit" value="Post">
+    </form>
+    <h3 id="commentHeader">Comments:</h3>
+    <div id="comments-container"></div>
   </div>
   <script src="slideshow.js"></script>
   <script src="script-home.js"></script>
