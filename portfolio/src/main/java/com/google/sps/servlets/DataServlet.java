@@ -47,7 +47,7 @@ public class DataServlet extends HttpServlet {
     for (Entity commentEntity : results.asIterable()) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
-      String commentString = (String) commentEntity.getProperty("comment");
+      String commentString = (String) commentEntity.getProperty("comment-string");
       Comment comment = new Comment(currentTime, name, commentString);
       listOfComments.add(comment);
     }
@@ -63,12 +63,12 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Date currentTime = new Date();
     String name = request.getParameter("name");
-    String commentString = request.getParameter("comment");
+    String commentString = request.getParameter("comment-string");
 
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("timeOfComment", currentTime);
-    commentEntity.setProperty("comment", commentString);
+    commentEntity.setProperty("comment-string", commentString);
 
     datastore.put(commentEntity);
 
