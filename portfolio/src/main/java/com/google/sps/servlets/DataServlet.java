@@ -44,9 +44,9 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    //Gets the various values from the query string
+    // Gets the various values from the query string
     int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
-    Query sortDirection = request.getParameter("sort-direction") == "descending" 
+    Query.SortDirection sortDirection = request.getParameter("sort-direction") == "descending" 
         ? SortDirection.DESCENDING : SortDirection.ASCENDING;
     Query query = new Query("Comment").addSort(
         request.getParameter("entity-property"), sortDirection);
@@ -54,7 +54,7 @@ public class DataServlet extends HttpServlet {
     
 
     List<Comment> tempListOfComments = new ArrayList<>();
-    //Creates a Comment object for each entity that was previously ever posted. 
+    // Creates a Comment object for each entity that was previously ever posted. 
     for (Entity commentEntity : results.asIterable(
         FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
@@ -63,7 +63,7 @@ public class DataServlet extends HttpServlet {
       Comment comment = new Comment(currentTime, name, commentString);
       tempListOfComments.add(comment);
     }
-    //Changes the list of Comments into a JSON
+    // Changes the list of Comments into a JSON
     Gson gson = new Gson();
     listOfComments = tempListOfComments;
     String json = gson.toJson(listOfComments);

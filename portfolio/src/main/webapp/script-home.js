@@ -38,7 +38,7 @@ window.onload = function() { main(); }
 function main() {
   initializeSlideshows();
   updateMaxDisplayComments();
-  populateComments();
+  updateComments();
 }
 
 /** 
@@ -70,12 +70,12 @@ function populateComments() {
               document.getElementById('comments-container');
           commentContainer.innerHTML = "";
 
-          for(i in comments) {
+          comments.forEach(function(item) {
             let /** string */ stringOfName;
-            if (comments[i].name==null || comments[i].name=='') {
+            if (item.name==null || item.name=='') {
               stringOfName = 'Anonymous';
             } else {
-              stringOfName = comments[i].name;
+              stringOfName = item.name;
             }
             //Creates two headers and paragraph for the name, date, and comment.
             const /** ?HTMLCollection */ nameOfCommenter =
@@ -84,10 +84,10 @@ function populateComments() {
             const /** ?HTMLCollection */ dateOfComment =
                 document.createElement('h4');
             dateOfComment.innerHTML =
-                "Date Posted: " + comments[i].timeOfComment;
+                "Date Posted: " + item.timeOfComment;
             const /** ?HTMLCollection */ actualComment =
                 document.createElement('p');
-            actualComment.innerHTML = comments[i].comment;
+            actualComment.innerHTML = item.comment;
 
             //Adds the individual elements to a single div
             const /** ?HTMLCollection */ divOfComment =
@@ -102,8 +102,8 @@ function populateComments() {
             divOfComment.style.padding='10px';
 
             commentContainer.appendChild(divOfComment);
-        }
-    });
+          });
+        });
 }
 /**
  * Updates the comments based on the maximum amount that
