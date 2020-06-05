@@ -36,12 +36,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private DatastoreService datastore = 
-        DatastoreServiceFactory.getDatastoreService();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    DatastoreService datastore = 
+        DatastoreServiceFactory.getDatastoreService();
     // Gets the various values from the query string
     int maxDisplayOfComments = Integer.parseInt(request.getParameter("max-numbers"));
     Query.SortDirection sortDirection = request.getParameter("sort-direction") == "descending" 
@@ -57,7 +55,7 @@ public class DataServlet extends HttpServlet {
         FetchOptions.Builder.withLimit(maxDisplayOfComments))) {
       Date currentTime = (Date) commentEntity.getProperty("timeOfComment");
       String name = (String) commentEntity.getProperty("name");
-      String commentString = (String) commentEntity.getProperty("comment");
+      String commentString = (String) commentEntity.getProperty("comment-string");
       Comment comment = new Comment(currentTime, name, commentString);
       listOfComments.add(comment);
     }
@@ -70,14 +68,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    DatastoreService datastore = 
+        DatastoreServiceFactory.getDatastoreService();
     Date currentTime = new Date();
     String name = request.getParameter("name");
-    String commentString = request.getParameter("comment");
+    String commentString = request.getParameter("comment-string");
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
     commentEntity.setProperty("timeOfComment", currentTime);
-    commentEntity.setProperty("comment", commentString);
-    commentEntity.setProperty("lengthOfComment",commentString.length());
+    commentEntity.setProperty("comment-string", commentString);
+    commentEntity.setProperty("lengthOfComment", commentString.length());
 
     datastore.put(commentEntity);
 

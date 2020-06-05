@@ -37,7 +37,7 @@ window.onload = function() { main(); }
  */
 function main() {
   initializeSlideshows();
-  updateMaxDisplayComments();
+  //updateMaxDisplayComments();
   updateComments();
 }
 
@@ -66,16 +66,18 @@ function initializeSlideshows() {
 function populateComments() {
   fetch(queryString).then(response => response.json()).then(
         (comments) => {
+          console.log(comments);
           const /** ?HTMLCollection */commentContainer =
               document.getElementById('comments-container');
           commentContainer.innerHTML = "";
 
-          comments.forEach(function(item) {
+          comments.forEach(function(comment) {
+            console.log(comment.commentString);
             let /** string */ stringOfName;
-            if (item.name==null || item.name=='') {
+            if (comment.name==null || comment.name=='') {
               stringOfName = 'Anonymous';
             } else {
-              stringOfName = item.name;
+              stringOfName = comment.name;
             }
             //Creates two headers and paragraph for the name, date, and comment.
             const /** ?HTMLCollection */ nameOfCommenter =
@@ -84,17 +86,17 @@ function populateComments() {
             const /** ?HTMLCollection */ dateOfComment =
                 document.createElement('h4');
             dateOfComment.innerHTML =
-                "Date Posted: " + item.timeOfComment;
-            const /** ?HTMLCollection */ actualComment =
+                "Date Posted: " + comment.timeOfComment;
+            const /** ?HTMLCollection */ commentString =
                 document.createElement('p');
-            actualComment.innerHTML = item.comment;
+            commentString.innerHTML = comment.commentString;
 
             //Adds the individual elements to a single div
             const /** ?HTMLCollection */ divOfComment =
                 document.createElement('div');
             divOfComment.appendChild(nameOfCommenter);
             divOfComment.appendChild(dateOfComment);
-            divOfComment.appendChild(actualComment);
+            divOfComment.appendChild(commentString);
 
             //Styles the div
             divOfComment.style.border='3px solid #b31b1b';
@@ -107,8 +109,8 @@ function populateComments() {
 }
 /**
  * Updates the comments based on the maximum amount that
- * should be displayed and also sorts the comments based on the value of the
- * sort-comments select.
+ * should be displayed and also sorts the comments based 
+ * on the value of the sort-comments select.
  */
 function updateComments() {
     const maxNumberDropdown =
@@ -122,8 +124,8 @@ function updateComments() {
     const sortDirection = 
         JSON.parse(document.getElementById('sort-comments'
             ).value)["sortDirection"];
-    queryString = '/data?max-numbers='+maxNumberDropdown+'?sort-direction='+
-        sortDirection+'?entity-property='+entityProperty;
+    queryString = '/data?max-numbers='+maxNumberDropdown+'&sort-direction='+
+        sortDirection+'&entity-property='+entityProperty;
     // Fetches comments again
     populateComments();
 }
